@@ -54,7 +54,7 @@ const NativeButton = createReactClass({
     const text = this._renderText();
 
     // Extract Button props
-    const buttonProps = {
+    let buttonProps = {
       accessibilityComponentType: this.props.accessibilityComponentType,
       accessibilityTraits: this.props.accessibilityTraits,
       accessible: this.props.accessible,
@@ -73,11 +73,14 @@ const NativeButton = createReactClass({
 
     // Render Native Android Button
     if (NativeButton.isAndroid) {
-      const background = this.props.background || TouchableNativeFeedback.SelectableBackground();
+      buttonProps = {
+        ...buttonProps,
+        background: this.props.background || TouchableNativeFeedback.SelectableBackground(),
+      };
 
       return (
         <TouchableNativeFeedback
-          {...buttonProps, background}>
+          {...buttonProps}>
           <View style={[styles.button, this.props.style, disabledStyle]}>
             {text}
           </View>
